@@ -1,4 +1,4 @@
-mergeFiles <- function()
+mergeFilesLabelAndExtract <- function()
 {
   # read the labels file for the feature names
   print("Reading feature labels")
