@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Coursera Course - &ldquo;Getting And Cleaning Data&rdquo; - Class Project</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Coursera Course - &ldquo;Getting And Cleaning Data&rdquo; - Class Project</h1>
+
+<p>This is the repository for the class project for the Coursera &ldquo;Getting and Cleaning Data&rdquo; class. </p>
+
+<h2>Files</h2>
+
+<p>In the repo, you will find these files:</p>
+
+<p><strong>readme.md</strong> - this file which describes the files in the repo and the scripts in the run_analysis.R file for how to generate the data</p>
+
+<p><strong>CodeBook.md</strong> - describes the data in the the final file</p>
+
+<p><strong>run_analysis.R</strong> - this file contains the scripts that are run to complete the project and create the tidy dataset.</p>
+
+<p><strong>merged.csv</strong> - this is a csv file that contains the data merged from the test and train data sets. It contains columns for all of the features as well a column for the activity and subject</p>
+
+<p><strong>extracted.csv</strong> - this file is a subset of merged.csv. It only contains the columns that are mean and standard deviation columns from the original data and the activity and subject columns.</p>
+
+<p><strong>summary.txt</strong> - this is the final tidy data file for the project. Instead of containing multiple samples for each feature, the feature entry is the average of the records per activity and per subject.</p>
+
+<h2>The Scripts - run_analysis.R</h2>
+
+<p><strong>Get the data</strong>
+To build the tidy dataset, you must first download and unzip the source data. The link to the data file is: <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip</a> </p>
+
+<p><strong>Source the script file</strong> Once the data is in place, you will want to source the script file to load the functions that are run to process the data. On my system, it is done by executing this command:</p>
+
+<pre><code>source(&#39;~/Training/Getting and Cleaning Data/Project/run_analysis.R&#39;)
+</code></pre>
+
+<p><strong>setup_Project()</strong> - once the data is in place, run the setup_Project() command once. It only needs to be run once. It will load and install the plyr package if needed and it sets the working directory to where I installed the data. You will need to update the directory path used in this function to match where the data lives on your system.</p>
+
+<pre><code>setup_Project()
+</code></pre>
+
+<p><strong>mergeFilesLabelAndExtract()</strong> Run the mergeFilesLabelAndExtract() function. </p>
+
+<pre><code>mergeFilesLabelAndExtract()
+</code></pre>
+
+<p>This function does the work of reading in and merging the test and training data and setting up the variable names nicely. It writes the merged.csv file which contains the entire data set (all columns from the original data) with cleaned up names and with descriptive text values for the activity column. It then extracts just the columns with mean and standard deviation values as well as the activity and subject columns. This extracted data is written to extracted.csv
+This function calls readFeatureLabels() and convertActivityToText() to do some of the work. </p>
+
+<p><strong>readFeatureLabels()</strong> - this function reads the features.txt file to create a character vector of feature column names. It calls cleanUpFeatureLabels() to tidy up the names.</p>
+
+<p><strong>cleanUpFeatureLabels()</strong> - this function cleans up the names of the feature columns. See the &ldquo;Cleanup&rdquo; section below on what is done to clean up the names.</p>
+
+<p><strong>convertActivityToText()</strong>- this function takes the vector of the activity column from the merged data frame and converts the integer entries into descriptive text. The text that used is read from the activity_labels.txt file and the underscores are removed to make it tidy.</p>
+
+<p><strong>makeSummaryDataset()</strong> - once you have called mergeFilesLabelAndExtract() to create the extracted.csv file, you should call this function.</p>
+
+<pre><code>makeSummaryDataset()
+</code></pre>
+
+<p>It will read in the extracted.csv file and create a summary data set which contains the average feature value per subject and per activity. This summary data set is written to the summary.txt file. Note that it is a .csv file but is written as a .txt so that it can be uploaded to coursera.</p>
+
+<h2>The Cleanup</h2>
+
+<p>The feature (column/variable) names that were provided in the features.txt file with the data do not meet the course critera for descriptive and human readable names. In order to make them more descriptive, I used these steps.</p>
+
+<ul>
+<li>Removed dashes &#39;-&#39; from the names</li>
+<li>Removed parentheses &#39;()&#39; from the names</li>
+<li>Changed the &#39;t&#39; prefix on the names to &#39;Time&#39; so that it was clear what it meant</li>
+<li>Changed the &#39;f&#39; prefix on the names to &#39;FrequencyDomain&#39; so it was clear what it meant</li>
+<li>Changed &#39;mean&#39; in the name to upper case &#39;Mean&#39; so it was properly camel cased in the name</li>
+<li>Changed &#39;std&#39; in the name to &#39;StandardDeviation&#39; so it was descriptive and properly camel cased in the name</li>
+<li>Moved the trailing &#39;X&#39;, &#39;Y&#39; and &#39;Z&#39; in the names to come before &#39;Mean&#39; and &#39;StandardDeviation&#39; so that it was connected to the rest of the description</li>
+<li>Removed the underscores &#39;_&#39; from the activity names</li>
+</ul>
+
+</body>
+
+</html>
+
