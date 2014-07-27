@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Coursera Course - &ldquo;Getting And Cleaning Data&rdquo; - Class Project</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Coursera Course - &ldquo;Getting And Cleaning Data&rdquo; - Class Project</h1>
+
+<h2>Raw Source data</h2>
+
+<p>The Raw data for this data set comes from <a href="https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip">https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip</a>. This zip file contains a readme.txt file that describes the experiments that were done and the data. Here is a summary of the raw data.</p>
+
+<p>For each record it is provided:</p>
+
+<ul>
+<li>Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.</li>
+<li>Triaxial Angular velocity from the gyroscope. </li>
+<li>A 561-feature vector with time and frequency domain variables. </li>
+<li>Its activity label. </li>
+<li>An identifier of the subject who carried out the experiment.</li>
+</ul>
+
+<h2>Transforming the data - Raw to Summary</h2>
+
+<p>Given the raw data, the provided scripts go through this process to generate the tidy data set.</p>
+
+<ul>
+<li>Read in the raw data from the test and train data sets</li>
+<li>Merge the test and training data into a single data set</li>
+<li>Read the feature names for the raw data</li>
+<li>Transform the feature names as described in Variable name cleanup below</li>
+<li>Attach the transformed names as column names to the merged data</li>
+<li>Read in the activity data and combine it with the feature data</li>
+<li>Read in the subject data and combine it with the feature data</li>
+<li>Transform the numerical version of the activity data into descriptive human friendly text</li>
+<li>Same the data set as merged.csv</li>
+<li>Extract just the columns from the dataset that are for mean and standard deviation. This is determined by looking for -mean() or -std() in the raw data feature names</li>
+<li>Save the extracted data as extracted.csv</li>
+<li>Create a summary data set which contains the average feature value per subject and per activity</li>
+<li>Write this summary data set to the file summary.txt file</li>
+</ul>
+
+<h2>Summary data</h2>
+
+<ul>
+<li>activity - name of the activity for this record</li>
+<li>subject - number of subject doing the activity for this record</li>
+<li>TimeBodyAccXMean - average of tBodyAcc-mean()-X for given activity and subject</li>
+<li>TimeBodyAccYMean - average of tBodyAcc-mean()-Y for given activity and subject</li>
+<li>TimeBodyAccZMean - average of tBodyAcc-mean()-Z for given activity and subject</li>
+<li>TimeBodyAccXStandardDeviation - average of tBodyAcc-std()-X for given activity and subject</li>
+<li>TimeBodyAccYStandardDeviation - average of tBodyAcc-std()-Y for given activity and subject</li>
+<li>TimeBodyAccZStandardDeviation - average of tBodyAcc-std()-Z for given activity and subject</li>
+<li>TimeGravityAccXMean - average of tGravityAcc-mean()-X for given activity and subject</li>
+<li>TimeGravityAccYMean - average of tGravityAcc-mean()-Y for given activity and subject</li>
+<li>TimeGravityAccZMean - average of tGravityAcc-mean()-Z for given activity and subject</li>
+<li>TimeGravityAccXStandardDeviation - average of tGravityAcc-std()-X for given activity and subject</li>
+<li>TimeGravityAccYStandardDeviation - average of tGravityAcc-std()-Y for given activity and subject</li>
+<li>TimeGravityAccZStandardDeviation - average of tGravityAcc-std()-Z for given activity and subject</li>
+<li>TimeBodyAccJerkXMean - average of tBodyAccJerk-mean()-X for given activity and subject</li>
+<li>TimeBodyAccJerkYMean - average of tBodyAccJerk-mean()-Y for given activity and subject</li>
+<li>TimeBodyAccJerkZMean - average of tBodyAccJerk-mean()-Z for given activity and subject</li>
+<li>TimeBodyAccJerkXStandardDeviation - average of tBodyAccJerk-std()-X for given activity and subject</li>
+<li>TimeBodyAccJerkYStandardDeviation - average of tBodyAccJerk-std()-Y for given activity and subject</li>
+<li>TimeBodyAccJerkZStandardDeviation - average of tBodyAccJerk-std()-Z for given activity and subject</li>
+<li>TimeBodyGyroXMean - average of tBodyGyro-mean()-X for given activity and subject</li>
+<li>TimeBodyGyroYMean - average of tBodyGyro-mean()-Y for given activity and subject</li>
+<li>TimeBodyGyroZMean - average of tBodyGyro-mean()-Z for given activity and subject</li>
+<li>TimeBodyGyroXStandardDeviation - average of tBodyGyro-std()-X for given activity and subject</li>
+<li>TimeBodyGyroYStandardDeviation - average of tBodyGyro-std()-Y for given activity and subject</li>
+<li>TimeBodyGyroZStandardDeviation - average of tBodyGyro-std()-Z for given activity and subject</li>
+<li>TimeBodyGyroJerkXMean - average of tBodyGyroJerk-mean()-X for given activity and subject</li>
+<li>TimeBodyGyroJerkYMean - average of tBodyGyroJerk-mean()-Y for given activity and subject</li>
+<li>TimeBodyGyroJerkZMean - average of tBodyGyroJerk-mean()-Z for given activity and subject</li>
+<li>TimeBodyGyroJerkXStandardDeviation - average of tBodyGyroJerk-std()-X for given activity and subject</li>
+<li>TimeBodyGyroJerkYStandardDeviation - average of tBodyGyroJerk-std()-Y for given activity and subject</li>
+<li>TimeBodyGyroJerkZStandardDeviation - average of tBodyGyroJerk-std()-Z for given activity and subject</li>
+<li>TimeBodyAccMagMean - average of tBodyAccMag-mean() for given activity and subject</li>
+<li>TimeBodyAccMagStandardDeviation - average of tBodyAccMag-std() for given activity and subject</li>
+<li>TimeGravityAccMagMean - average of tGravityAccMag-mean() for given activity and subject</li>
+<li>TimeGravityAccMagStandardDeviation - average of tGravityAccMag-std() for given activity and subject</li>
+<li>TimeBodyAccJerkMagMean - average of tBodyAccJerkMag-mean() for given activity and subject</li>
+<li>TimeBodyAccJerkMagStandardDeviation - average of tBodyAccJerkMag-std() for given activity and subject</li>
+<li>TimeBodyGyroMagMean - average of tBodyGyroMag-mean() for given activity and subject</li>
+<li>TimeBodyGyroMagStandardDeviation - average of tBodyGyroMag-std() for given activity and subject</li>
+<li>TimeBodyGyroJerkMagMean - average of tBodyGyroJerkMag-mean() for given activity and subject</li>
+<li>TimeBodyGyroJerkMagStandardDeviation - average of tBodyGyroJerkMag-std() for given activity and subject</li>
+<li>FrequencyDomainBodyAccXMean - average of fBodyAcc-mean()-X for given activity and subject</li>
+<li>FrequencyDomainBodyAccYMean - average of fBodyAcc-mean()-Y for given activity and subject</li>
+<li>FrequencyDomainBodyAccZMean - average of fBodyAcc-mean()-Z for given activity and subject</li>
+<li>FrequencyDomainBodyAccXStandardDeviation - average of fBodyAcc-std()-X for given activity and subject</li>
+<li>FrequencyDomainBodyAccYStandardDeviation - average of fBodyAcc-std()-Y for given activity and subject</li>
+<li>FrequencyDomainBodyAccZStandardDeviation - average of fBodyAcc-std()-Z for given activity and subject</li>
+<li>FrequencyDomainBodyAccJerkXMean - average of fBodyAccJerk-mean()-X for given activity and subject</li>
+<li>FrequencyDomainBodyAccJerkYMean - average of fBodyAccJerk-mean()-Y for given activity and subject</li>
+<li>FrequencyDomainBodyAccJerkZMean - average of fBodyAccJerk-mean()-Z for given activity and subject</li>
+<li>FrequencyDomainBodyAccJerkXStandardDeviation - average of fBodyAccJerk-std()-X for given activity and subject</li>
+<li>FrequencyDomainBodyAccJerkYStandardDeviation - average of fBodyAccJerk-std()-Y for given activity and subject</li>
+<li>FrequencyDomainBodyAccJerkZStandardDeviation - average of fBodyAccJerk-std()-Z for given activity and subject</li>
+<li>FrequencyDomainBodyGyroXMean - average of fBodyGyro-mean()-X for given activity and subject</li>
+<li>FrequencyDomainBodyGyroYMean - average of fBodyGyro-mean()-Y for given activity and subject</li>
+<li>FrequencyDomainBodyGyroZMean - average of fBodyGyro-mean()-Z for given activity and subject</li>
+<li>FrequencyDomainBodyGyroXStandardDeviation - average of fBodyGyro-std()-X for given activity and subject</li>
+<li>FrequencyDomainBodyGyroYStandardDeviation - average of fBodyGyro-std()-Y for given activity and subject</li>
+<li>FrequencyDomainBodyGyroZStandardDeviation - average of fBodyGyro-std()-Z for given activity and subject</li>
+<li>FrequencyDomainBodyAccMagMean - average of fBodyAccMag-mean() for given activity and subject</li>
+<li>FrequencyDomainBodyAccMagStandardDeviation - average of fBodyAccMag-std() for given activity and subject</li>
+<li>FrequencyDomainBodyBodyAccJerkMagMean - average of fBodyBodyAccJerkMag-mean() for given activity and subject</li>
+<li>FrequencyDomainBodyBodyAccJerkMagStandardDeviation - average of fBodyBodyAccJerkMag-std() for given activity and subject</li>
+<li>FrequencyDomainBodyBodyGyroMagMean - average of fBodyBodyGyroMag-mean() for given activity and subject</li>
+<li>FrequencyDomainBodyBodyGyroMagStandardDeviation - average of fBodyBodyGyroMag-std() for given activity and subject</li>
+<li>FrequencyDomainBodyBodyGyroJerkMagMean - average of fBodyBodyGyroJerkMag-mean() for given activity and subject</li>
+<li>FrequencyDomainBodyBodyGyroJerkMagStandardDeviation - average of fBodyBodyGyroJerkMag-std() for given activity and subject</li>
+</ul>
+
+<h2>Variable name Cleanup</h2>
+
+<p>The feature (column/variable) names that were provided in the features.txt file with the data do not meet the course critera for descriptive and human readable names. I personally would like slightly different names then what I ended up with but they are all procedurally generatd so they are repeatable by the script. I felt that was a good thing. In order to make them more descriptive, I used these steps.</p>
+
+<ul>
+<li>Removed dashes &#39;-&#39; from the names</li>
+<li>Removed parentheses &#39;()&#39; from the names</li>
+<li>Changed the &#39;t&#39; prefix on the names to &#39;Time&#39; so that it was clear what it meant</li>
+<li>Changed the &#39;f&#39; prefix on the names to &#39;FrequencyDomain&#39; so it was clear what it meant</li>
+<li>Changed &#39;mean&#39; in the name to upper case &#39;Mean&#39; so it was properly camel cased in the name</li>
+<li>Changed &#39;std&#39; in the name to &#39;StandardDeviation&#39; so it was descriptive and properly camel cased in the name</li>
+<li>Moved the trailing &#39;X&#39;, &#39;Y&#39; and &#39;Z&#39; in the names to come before &#39;Mean&#39; and &#39;StandardDeviation&#39; so that it was connected to the rest of the description</li>
+<li>Removed the underscores &#39;_&#39; from the activity names</li>
+</ul>
+
+</body>
+
+</html>
+
